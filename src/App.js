@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
-import { Loading } from './components/Loading/Loading.js'
+import { Loading } from './components/Loading/Loading.js';
+import { Home } from './components/Home/Home.js';
+import { Persons } from './components/Persons/Persons.js';
+import { SinglePerson } from './components/SinglePerson/SinglePerson';
+import { Create } from './components/Create/Create';
+
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 
 const App = () => {
 
   //!states
   const [count, setCount] = useState(0)
   const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
   const [person, setPerson] = useState(true)
 
 
@@ -15,43 +20,29 @@ const App = () => {
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then(res => res.json())
-      .then((result) => { setData(result); setLoading(false) })
+      .then((result) => { setData(result) })
   })
 
 
-  if (loading) {
-    return (
-      <>
-        <Loading />
-      </>
-    )
-
-  }
-  else {
-    return (
-      <>
-        <h1
-        >{count}</h1>
-        <button onClick={() => {
-          setCount(count + 1)
-        }}>Increase</button>
-        <button onClick={() => {
-          setCount(count - 1)
-        }}>Decrease</button>
-
-        {data.map(data => (
-          <ul key={data.id}>
-            <li>{data.name}</li>
-            <li>{data.id}</li>
-          </ul>
-
-        ))
-        }
-
-      </>
-    )
-  }
-
+  return (
+    <>
+      <Router>
+        <ul style={{ display: "flex", listStyle: "none", fontWeight: "600", }}>
+          <Link to="/"><li>Home</li></Link>
+          <Link to="/users/"><li>Users</li></Link>
+          <Link to="/kebab/"><li>Kebab</li></Link>
+        </ul>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/users/" element={<Persons />} />
+          <Route path="/user/:id" element={<SinglePerson />} />
+          <Route path="/blog/" element={<Create />} />
+        </Routes>
+      </Router>
+    </>
+  )
 }
+
+
 
 export default App
