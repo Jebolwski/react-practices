@@ -18,11 +18,14 @@ const App = () => {
 
   //!effects
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then(res => res.json())
-      .then((result) => { setData(result) })
-  })
+    
+  },[])
 
+  let getPersons = async () =>{
+    let response = await fetch("http://localhost:8000/persons")
+    let data = await response.json()
+    console.log(data);
+    }
 
   return (
     <>
@@ -30,13 +33,12 @@ const App = () => {
         <ul style={{ display: "flex", listStyle: "none", fontWeight: "600", }}>
           <Link to="/"><li>Home</li></Link>
           <Link to="/users/"><li>Users</li></Link>
-          <Link to="/kebab/"><li>Kebab</li></Link>
+          <Link to="/blog/"><li>Kebab</li></Link>
         </ul>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/users/" element={<Persons />} />
           <Route path="/user/:id" element={<SinglePerson />} />
-          <Route path="/blog/" element={<Create />} />
         </Routes>
       </Router>
     </>
