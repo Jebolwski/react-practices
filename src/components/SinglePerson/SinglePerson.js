@@ -5,7 +5,7 @@ import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 
 
-export const SinglePerson = ({history}) => {
+const SinglePerson = ({history}) => {
 
     const {id} = useParams()
 
@@ -16,9 +16,11 @@ export const SinglePerson = ({history}) => {
 
     useEffect(() => {
         getPersons()
-    },[])
+        console.log(id);
+    },[id])
 
     let getPersons = async () => {
+        if (id ==="new") return
         let response = await fetch(`http://localhost:8000/persons/${id}`)
         let data = await response.json()
         setLoading(false)
@@ -63,7 +65,13 @@ export const SinglePerson = ({history}) => {
 
 
     let handleSubmit = () =>{
-        updatePerson()
+        if (id !=="new" && !data.title){
+            deletePerson()
+        }else if (id ==="new"){
+            updatePerson()
+        }else if (id === 'new' && data !== null) {
+            createPerson()
+        }
         history.push("/users/")
     }
 
@@ -78,8 +86,9 @@ export const SinglePerson = ({history}) => {
     else {
         return (
             <div>
-                <Link to="/users/"><button onClick={handleSubmit}>Save</button></Link>
-                <Link to="/users/"><button onClick={deletePerson}>Delete</button></Link>
+                {id !=="new" ? (<Link to="/users/"><button onClick={handleSubmit}>Save</button></Link>):(<Link to="/users/"><button onClick={deletePerson}>Delete</button></Link>)}
+                
+                
                 
                 <textarea onChange={(e) => { setData({ ...data, 'name': e.target.value }) }} placeholder="Edit data" value={data?.name}></textarea>
             </div>
@@ -87,3 +96,5 @@ export const SinglePerson = ({history}) => {
     }
 
 }
+
+export default SinglePerson

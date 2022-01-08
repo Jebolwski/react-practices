@@ -1,8 +1,10 @@
 import React,{useEffect,useState} from 'react'
 
+import AddButton from '../Add Button/AddButton'
+
 import {Link} from 'react-router-dom'
 
-export const Persons = () => {
+const Persons = () => {
      
     const [data,setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -29,18 +31,22 @@ export const Persons = () => {
       }
 
 
-      else{return (
+      else{
+        return (
         <div>
-            {data.map(data => (
+            {data.map((data,index )=> (
           <ul key={data.id}>
             <Link to={`/user/${data.id}`}><li>{data.name}</li></Link>
             <li>{data.id}</li>
           </ul>
-
         ))
         }
+        <AddButton/>
         </div>
     )
   }
     
 }
+
+
+export default Persons

@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { Loading } from './components/Loading/Loading.js';
 import { Home } from './components/Home/Home.js';
-import { Persons } from './components/Persons/Persons.js';
-import { SinglePerson } from './components/SinglePerson/SinglePerson';
-import { Create } from './components/Create/Create';
+import  Persons  from './components/Persons/Persons.js';
+import  SinglePerson from './components/SinglePerson/SinglePerson';
 
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 
@@ -33,7 +32,6 @@ const App = () => {
         <ul style={{ display: "flex", listStyle: "none", fontWeight: "600", }}>
           <Link to="/"><li>Home</li></Link>
           <Link to="/users/"><li>Users</li></Link>
-          <Link to="/blog/"><li>Kebab</li></Link>
         </ul>
         <Routes>
           <Route path="/" element={<Home />} />
